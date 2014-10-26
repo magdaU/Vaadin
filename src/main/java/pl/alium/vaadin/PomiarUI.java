@@ -32,7 +32,7 @@ public class PomiarUI extends UI {
 
 	private static final long serialVersionUID = 1L;
 
-	@WebServlet(value = "/pomiar/*", asyncSupported = true)
+	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = PomiarUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
