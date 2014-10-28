@@ -10,7 +10,7 @@ public class Pomiar {
 	private int rozkurcz;
 	private String czasPomiaru;
 	
-	public Pomiar (int tetno, int rozkurcz, int skurcz, String czasPomiaru){
+	public Pomiar (int tetno, int skurcz, int rozkurcz, String czasPomiaru){
 		this.tetno=tetno;
 		this.rozkurcz=rozkurcz;
 		this.skurcz=skurcz;

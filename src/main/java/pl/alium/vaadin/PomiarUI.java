@@ -13,6 +13,7 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.ListSet;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -25,14 +26,14 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
-@Title("Aplikacja do rejestracji przeglądu")
+@Title("Aplikacja do rejestracji pomiarów ciśnienia")
 @Theme("mytheme")
 @SuppressWarnings("serial")
 public class PomiarUI extends UI {
 
 	private static final long serialVersionUID = 1L;
 
-	@WebServlet(value = "/*", asyncSupported = true)
+	@WebServlet(value = "/cisnienie/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = PomiarUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
@@ -64,7 +65,7 @@ public class PomiarUI extends UI {
 		vl.addComponent(hl);
 
 		final Table table = new Table("Pomiary cisnienia", pomiary);
-		table.setColumnHeader("tetno", "Etykieta-Tetno");
+	
 		table.setColumnHeader("skurcz", " Etykieta-Skurczowe");
 		table.setColumnHeader("rozkurcz", "Etykieta-Rozkurczowe");
 		table.setColumnHeader("czasPomiaru", "Etykieta-pomiar");
@@ -76,8 +77,8 @@ public class PomiarUI extends UI {
 				addWindow(new Formularz());
 			}
 		});
+		
 	}
-
 	private class Formularz extends Window {
 		private static final long serialVersionUID = 1L;
 
@@ -93,8 +94,8 @@ public class PomiarUI extends UI {
 			Button cancelButton1 = new Button("Anuluj");
 
 			form.addComponent(binder.buildAndBind("Tetno", "tetno"));
-			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
 			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
+			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
 			form.addComponent(binder.buildAndBind("Data", "czasPomiaru"));
 
 			binder.setBuffered(false);
@@ -127,6 +128,6 @@ public class PomiarUI extends UI {
 					
 				}
 			});
-		}
+		}	
 	}
 }
