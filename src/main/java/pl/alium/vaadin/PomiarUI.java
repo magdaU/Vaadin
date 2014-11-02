@@ -5,10 +5,10 @@ import javax.servlet.annotation.WebServlet;
 import pl.alium.vaadin.model.Pomiar;
 import pl.alium.vaadin.services.PomiarManager;
 
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
@@ -18,6 +18,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
@@ -39,7 +40,8 @@ public class PomiarUI extends UI {
 	}
 
 	private PomiarManager pomiarManager = new PomiarManager();
-	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne", "cwiczenia", "pokarm", "stres", "leki");
+	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne",
+			"cwiczenia", "pokarm", "stres", "leki");
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
@@ -65,8 +67,8 @@ public class PomiarUI extends UI {
 		vl.addComponent(hl);
 
 		final Table table = new Table("Pomiary cisnienia", pomiary);
-	
-		//atrybut-identyfikacja kolumny, etykieta
+
+		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
 		table.setColumnHeader("skurcz", "Skurczowe");
 		table.setColumnHeader("rozkurcz", "Rozkurczowe");
@@ -76,8 +78,42 @@ public class PomiarUI extends UI {
 		table.setColumnHeader("pokarm", "Pokarm");
 		table.setColumnHeader("stres", "Stres");
 		table.setColumnHeader("leki", "Leki");
+		table.addValueChangeListener(new Property.ValueChangeListener() {
+
+			@Override
+			public void valueChange(
+					com.vaadin.data.Property.ValueChangeEvent event) {
+				// TODO Auto-generated method stub
+				Pomiar selectedPomiar = (Pomiar) table.getValue();
+				if (selectedPomiar == null) {
+					pomiar1.setCwiczenia("");
+					pomiar1.setCzasPomiaru("");
+					pomiar1.setId(null);
+					pomiar1.setInne("");
+					pomiar1.setLeki("");
+					pomiar1.setPokarm("");
+					pomiar1.setRozkurcz(0);
+					pomiar1.setSkurcz(0);
+					pomiar1.setStres("");
+					pomiar1.setTetno(0);
+
+				} else {
+					pomiar1.setCwiczenia(selectedPomiar.getCwiczenia());
+					pomiar1.setCzasPomiaru(selectedPomiar.getCzasPomiaru());
+					pomiar1.setId(selectedPomiar.getId());
+					pomiar1.setInne(selectedPomiar.getInne());
+					pomiar1.setLeki(selectedPomiar.getLeki());
+					pomiar1.setPokarm(selectedPomiar.getPokarm());
+					pomiar1.setRozkurcz(selectedPomiar.getRozkurcz());
+					pomiar1.setSkurcz(selectedPomiar.getSkurcz());
+					pomiar1.setStres(selectedPomiar.getStres());
+					pomiar1.setTetno(selectedPomiar.getTetno());
+				}
+			}
+		});
+
+		table.setSelectable(true);
 		vl.addComponent(table);
-		
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
@@ -85,8 +121,36 @@ public class PomiarUI extends UI {
 				addWindow(new Formularz());
 			}
 		});
-		
+		deleteButon.addClickListener(new ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (!pomiar1.getLeki().isEmpty()) {
+					pomiarManager.deletePomiar(pomiar1);
+					pomiary.removeAllItems();
+					pomiary.addAll(pomiarManager.getAll());
+
+				}
+			}
+		});
+		deleteButon.addClickListener(new ClickListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (!pomiar1.getLeki().isEmpty()) {
+					pomiarManager.deletePomiar(pomiar1);
+					pomiary.removeAllItems();
+					pomiary.addAll(pomiarManager.getAll());
+
+				}
+			}
+		});
 	}
+
 	private class Formularz extends Window {
 		private static final long serialVersionUID = 1L;
 
@@ -101,9 +165,8 @@ public class PomiarUI extends UI {
 			Button saveButton1 = new Button("Zapisz");
 			Button cancelButton1 = new Button("Anuluj");
 
-		
-			//Nazwa, atrybut
-			
+			// Nazwa, atrybut
+
 			form.addComponent(binder.buildAndBind("Tetno", "tetno"));
 			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
 			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
@@ -140,9 +203,9 @@ public class PomiarUI extends UI {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					close();
-					
+
 				}
 			});
-		}	
+		}
 	}
 }

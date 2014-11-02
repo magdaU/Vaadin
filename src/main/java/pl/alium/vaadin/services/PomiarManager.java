@@ -23,6 +23,18 @@ public class PomiarManager {
 	public List<Pomiar> getAll(){
 		return db;
 	}
+	public void deletePomiar(Pomiar pomiar){
+		//stworzenie refencji
+		Pomiar pomiarToRemove=null;
+		//klasa, p -po nich sie odniosimy , db-> kolekcja, tablica
+		for(Pomiar p: db){
+			if (p.getId().compareTo(pomiar.getId())==0){
+				pomiarToRemove=p;
+				break;
+			}
+		}
+		db.remove(pomiarToRemove);
+	}
 	
 	
 }
