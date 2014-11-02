@@ -20,6 +20,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -38,7 +39,7 @@ public class PomiarCukruUI extends UI {
 	}
 
 	private PomiarCukruManager pomcukierManager = new PomiarCukruManager();
-	private PomiarCukru pomiarC1 = new PomiarCukru(80,"2014-10-29");
+	private PomiarCukru pomiarC1 = new PomiarCukru(80,"2014-10-29", "śniadanie", "bieg po schodach", "nie", "Medocalm", "palenie papierosów");
 	
 	private BeanItem<PomiarCukru> pomiarItem = new BeanItem<PomiarCukru>(pomiarC1);
 	private BeanItemContainer<PomiarCukru> pomiary = new BeanItemContainer<PomiarCukru>(
@@ -65,8 +66,14 @@ public class PomiarCukruUI extends UI {
 
 		final Table tableC = new Table("Pomiary cukru", pomiary);
 	
-		tableC.setColumnHeader("poziomCukru", " Etykieta-cukier");
+		//atrybut , a pozniej etykieta
+		tableC.setColumnHeader("poziomCukru", "Etykieta-cukier");
 		tableC.setColumnHeader("czasPomiaruCukru", "Etykieta-czas");
+		tableC.setColumnHeader("leki","Etykieta-leki");
+		tableC.setColumnHeader("cwiczenia", "Etykieta-cwiczenia");
+		tableC.setColumnHeader("pokarm", "Etykieta-pokarm");
+		tableC.setColumnHeader("stres", "Etykieta-stres");
+		tableC.setColumnHeader("inne", "Etykieta- inne");
 		vlC.addComponent(tableC);
 
 		addButonCukier.addClickListener(new ClickListener() {
@@ -84,16 +91,23 @@ public class PomiarCukruUI extends UI {
 		public Formularz() {
 			center();
 			setModal(true);
-			setCaption("Okno formularza");
+			setCaption("OKNO FORMULARZA");
 
 			FormLayout form = new FormLayout();
 			final FieldGroup binder = new FieldGroup(pomiarItem);
+			
 
 			Button saveButtonC = new Button("Zapisz");
 			Button cancelButtonC = new Button("Anuluj");
-
+			
+			// etykieta, atrybut
 			form.addComponent(binder.buildAndBind("poziomCukru", "poziomCukru"));
 			form.addComponent(binder.buildAndBind("Data", "czasPomiaruCukru"));
+			form.addComponent(binder.buildAndBind("pokarm", "pokarm"));
+			form.addComponent(binder.buildAndBind("cwiczenia", "cwiczenia"));
+			form.addComponent(binder.buildAndBind ("stres", "stres"));
+			form.addComponent(binder.buildAndBind("leki", "leki"));
+			form.addComponent(binder.buildAndBind("inne", "inne"));
 			binder.setBuffered(false);
 
 			VerticalLayout vlC2= new VerticalLayout();

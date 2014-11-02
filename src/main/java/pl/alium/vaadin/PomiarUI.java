@@ -39,7 +39,7 @@ public class PomiarUI extends UI {
 	}
 
 	private PomiarManager pomiarManager = new PomiarManager();
-	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24");
+	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne", "cwiczenia", "pokarm", "stres", "leki");
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
@@ -66,10 +66,18 @@ public class PomiarUI extends UI {
 
 		final Table table = new Table("Pomiary cisnienia", pomiary);
 	
-		table.setColumnHeader("skurcz", " Etykieta-Skurczowe");
-		table.setColumnHeader("rozkurcz", "Etykieta-Rozkurczowe");
-		table.setColumnHeader("czasPomiaru", "Etykieta-pomiar");
+		//atrybut-identyfikacja kolumny, etykieta
+		table.setColumnHeader("tetno", "tetno");
+		table.setColumnHeader("skurcz", "Skurczowe");
+		table.setColumnHeader("rozkurcz", "Rozkurczowe");
+		table.setColumnHeader("czasPomiaru", "Czas pomiaru");
+		table.setColumnHeader("inne", "Inne");
+		table.setColumnHeader("cwiczenia", "Cwiczenia");
+		table.setColumnHeader("pokarm", "Pokarm");
+		table.setColumnHeader("stres", "Stres");
+		table.setColumnHeader("leki", "Leki");
 		vl.addComponent(table);
+		
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
@@ -93,11 +101,18 @@ public class PomiarUI extends UI {
 			Button saveButton1 = new Button("Zapisz");
 			Button cancelButton1 = new Button("Anuluj");
 
+		
+			//Nazwa, atrybut
+			
 			form.addComponent(binder.buildAndBind("Tetno", "tetno"));
-			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
 			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
+			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
 			form.addComponent(binder.buildAndBind("Data", "czasPomiaru"));
-
+			form.addComponent(binder.buildAndBind("Inne", "inne"));
+			form.addComponent(binder.buildAndBind("Ćwiczenia", "cwiczenia"));
+			form.addComponent(binder.buildAndBind("Pokarm", "pokarm"));
+			form.addComponent(binder.buildAndBind("Stres", "stres"));
+			form.addComponent(binder.buildAndBind("Leki", "leki"));
 			binder.setBuffered(false);
 
 			VerticalLayout vl = new VerticalLayout();

@@ -12,11 +12,17 @@ public class PomiarCukruManager {
 
 	public void addPomiarC(PomiarCukru pomiarc) {
 		PomiarCukru pC = new PomiarCukru(pomiarc.getPoziomCukru(),
-				pomiarc.getCzasPomiaruCukru());
+				pomiarc.getCzasPomiaruCukru(), pomiarc.getCwiczenia(),
+				pomiarc.getLeki(), pomiarc.getStres(), pomiarc.getPokarm(),
+				pomiarc.getInne());
+		
 		pC.setId(UUID.randomUUID());
 		db.add(pC);
 
 	}
+	
+	//public void deletePomiarC(PomiarCukru pomiarC) {
+	//		}
 
 	public List<PomiarCukru> getAll() {
 		return db;
