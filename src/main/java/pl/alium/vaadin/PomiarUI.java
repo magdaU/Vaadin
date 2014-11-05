@@ -45,6 +45,7 @@ public class PomiarUI extends UI {
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
+	final Table table = new Table("Pomiary cisnienia", pomiary);
 
 	enum Action {
 		ADD, EDIT;
@@ -66,7 +67,7 @@ public class PomiarUI extends UI {
 		hl.addComponent(deleteButon);
 		vl.addComponent(hl);
 
-		final Table table = new Table("Pomiary cisnienia", pomiary);
+		
 
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
@@ -121,6 +122,16 @@ public class PomiarUI extends UI {
 				addWindow(new Formularz());
 			}
 		});
+
+		editButon.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				addWindow(new Formularz2());
+
+			}
+		});
+
 		deleteButon.addClickListener(new ClickListener() {
 
 			private static final long serialVersionUID = 1L;
@@ -149,6 +160,66 @@ public class PomiarUI extends UI {
 				}
 			}
 		});
+	}
+
+	private class Formularz2 extends Window {
+		private static final long serialVersionUID = 1L;
+
+		public Formularz2() {
+			center();
+			setModal(true);
+			setCaption("Okno formularza");
+
+			FormLayout form = new FormLayout();
+			final FieldGroup binder = new FieldGroup(pomiarItem);
+
+			Button saveButton1 = new Button("Zapisz");
+			Button cancelButton1 = new Button("Anuluj");
+
+			// Nazwa, atrybut
+
+			form.addComponent(binder.buildAndBind("Tetno", "tetno"));
+			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
+			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
+			form.addComponent(binder.buildAndBind("Data", "czasPomiaru"));
+			form.addComponent(binder.buildAndBind("Inne", "inne"));
+			form.addComponent(binder.buildAndBind("Ćwiczenia", "cwiczenia"));
+			form.addComponent(binder.buildAndBind("Pokarm", "pokarm"));
+			form.addComponent(binder.buildAndBind("Stres", "stres"));
+			form.addComponent(binder.buildAndBind("Leki", "leki"));
+			binder.setBuffered(false);
+
+			VerticalLayout vl = new VerticalLayout();
+			vl.addComponent(form);
+			HorizontalLayout hl = new HorizontalLayout();
+			hl.addComponent(saveButton1);
+			hl.addComponent(cancelButton1);
+			vl.addComponent(hl);
+			setContent(vl);
+
+			saveButton1.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						binder.commit();
+						pomiarManager.editPomiar(pomiar1);
+						pomiary.addAll(pomiarManager.getAll());
+						table.refreshRowCache();
+						close();
+					} catch (CommitException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			cancelButton1.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					close();
+
+				}
+			});
+
+		}
 	}
 
 	private class Formularz extends Window {
