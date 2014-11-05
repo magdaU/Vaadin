@@ -21,8 +21,7 @@ public class PomiarCukruManager {
 
 	}
 	
-	//public void deletePomiarC(PomiarCukru pomiarC) {
-	//		}
+
 
 	public List<PomiarCukru> getAll() {
 		return db;

@@ -23,6 +23,21 @@ public class PomiarManager {
 	public List<Pomiar> getAll(){
 		return db;
 	}
+	public void editPomiar (Pomiar pomiar ){
+		for(Pomiar p: db){
+			if(p.getId().equals(pomiar.getId())){
+					p.setCwiczenia(pomiar.getCwiczenia());
+					p.setCzasPomiaru(pomiar.getCzasPomiaru());
+					p.setInne(pomiar.getInne());
+					p.setLeki(pomiar.getLeki());
+					p.setPokarm(pomiar.getPokarm());
+					p.setRozkurcz(pomiar.getRozkurcz());
+					p.setSkurcz(pomiar.getSkurcz());
+					p.setStres(pomiar.getStres());
+					p.setTetno(pomiar.getTetno());
+			}
+		}
+	}
 	public void deletePomiar(Pomiar pomiar){
 		//stworzenie refencji
 		Pomiar pomiarToRemove=null;
@@ -35,6 +50,7 @@ public class PomiarManager {
 		}
 		db.remove(pomiarToRemove);
 	}
+	
 	
 	
 }
