@@ -41,7 +41,7 @@ public class PomiarUI extends UI {
 
 	private PomiarManager pomiarManager = new PomiarManager();
 	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne",
-			"cwiczenia", "pokarm", "stres", "leki");
+			false, "pokarm", false, "leki");
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
@@ -50,12 +50,13 @@ public class PomiarUI extends UI {
 	enum Action {
 		ADD, EDIT;
 	}
+	final Button deleteButon = new Button("Usuń");
+	final Button editButon = new Button("Edytuj");
 
 	@Override
 	protected void init(VaadinRequest request) {
 		Button addButon = new Button("Dodaj");
-		Button deleteButon = new Button("Usuń");
-		Button editButon = new Button("Edytuj");
+		
 
 		VerticalLayout vl = new VerticalLayout();
 		setContent(vl);
@@ -87,7 +88,7 @@ public class PomiarUI extends UI {
 				// TODO Auto-generated method stub
 				Pomiar selectedPomiar = (Pomiar) table.getValue();
 				if (selectedPomiar == null) {
-					pomiar1.setCwiczenia("");
+					pomiar1.setCwiczenia(false);
 					pomiar1.setCzasPomiaru("");
 					pomiar1.setId(null);
 					pomiar1.setInne("");
@@ -95,7 +96,7 @@ public class PomiarUI extends UI {
 					pomiar1.setPokarm("");
 					pomiar1.setRozkurcz(0);
 					pomiar1.setSkurcz(0);
-					pomiar1.setStres("");
+					pomiar1.setStres(false);
 					pomiar1.setTetno(0);
 
 				} else {
@@ -110,8 +111,11 @@ public class PomiarUI extends UI {
 					pomiar1.setStres(selectedPomiar.getStres());
 					pomiar1.setTetno(selectedPomiar.getTetno());
 				}
+				setModificationEnabled(event.getProperty().getValue()!=null);
 			}
+		
 		});
+		
 
 		table.setSelectable(true);
 		vl.addComponent(table);
@@ -131,6 +135,8 @@ public class PomiarUI extends UI {
 
 			}
 		});
+		editButon.setEnabled(false);
+		deleteButon.setEnabled(false);
 
 		deleteButon.addClickListener(new ClickListener() {
 
@@ -156,12 +162,16 @@ public class PomiarUI extends UI {
 					pomiarManager.deletePomiar(pomiar1);
 					pomiary.removeAllItems();
 					pomiary.addAll(pomiarManager.getAll());
-
+					setModificationEnabled(false);
 				}
 			}
 		});
 	}
 
+	public void setModificationEnabled(boolean b){
+		editButon.setEnabled(b);
+		deleteButon.setEnabled(b);
+	}
 	private class Formularz2 extends Window {
 		private static final long serialVersionUID = 1L;
 

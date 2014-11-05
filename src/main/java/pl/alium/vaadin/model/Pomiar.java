@@ -10,14 +10,14 @@ public class Pomiar {
 	private int rozkurcz;
 	private String czasPomiaru;
 	private String pokarm;
-	private String cwiczenia;
-	private String stres;
+	private boolean cwiczenia;
+	private boolean stres;
 	private String leki;
 	private String inne ="brak snu";
 	
 	public Pomiar (int tetno, int skurcz, int rozkurcz, String czasPomiaru,
-			String inne, String cwiczenia, String pokarm,
-			String stres, String leki){
+			String inne, boolean cwiczenia, String pokarm,
+			boolean stres, String leki){
 		this.tetno=tetno;
 		this.skurcz=skurcz;
 		this.rozkurcz=rozkurcz;
@@ -35,16 +35,16 @@ public class Pomiar {
 	public void setPokarm(String pokarm) {
 		this.pokarm = pokarm;
 	}
-	public String getCwiczenia() {
+	public boolean getCwiczenia() {
 		return cwiczenia;
 	}
-	public void setCwiczenia(String cwiczenia) {
+	public void setCwiczenia(boolean cwiczenia) {
 		this.cwiczenia = cwiczenia;
 	}
-	public String getStres() {
+	public boolean getStres() {
 		return stres;
 	}
-	public void setStres(String stres) {
+	public void setStres(boolean stres) {
 		this.stres = stres;
 	}
 	public String getLeki() {
