@@ -7,8 +7,8 @@ public class PomiarCukru {
 		private int poziomCukru;
 		private String czasPomiaruCukru;
 		private String pokarm;
-		private String cwiczenia;
-		private String stres;
+		private boolean cwiczenia;
+		private boolean stres;
 		private String leki;
 		private String inne="nałogi";
 
@@ -28,24 +28,24 @@ public class PomiarCukru {
 			this.pokarm = pokarm;
 		}
 
-		public String getCwiczenia() {
+		public boolean getCwiczenia() {
 			return cwiczenia;
 		}
 
-		public void setCwiczenia(String cwiczenia) {
+		public void setCwiczenia(boolean cwiczenia) {
 			this.cwiczenia = cwiczenia;
 		}
 
-		public String getStres() {
+		public boolean getStres() {
 			return stres;
 		}
 
-		public void setStres(String stres) {
+		public void setStres(boolean stres) {
 			this.stres = stres;
 		}
 
 		public PomiarCukru (int poziomCukru, String czasPomiaruCukru,
-				String pokarm, String cwiczenia, String stres, String leki,
+				String pokarm, boolean cwiczenia, boolean stres, String leki,
 				String inne){
 			this.poziomCukru=poziomCukru;
 			this.czasPomiaruCukru=czasPomiaruCukru;

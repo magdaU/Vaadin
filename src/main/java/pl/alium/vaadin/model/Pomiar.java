@@ -38,8 +38,8 @@ public class Pomiar {
 	public boolean getCwiczenia() {
 		return cwiczenia;
 	}
-	public void setCwiczenia(boolean cwiczenia) {
-		this.cwiczenia = cwiczenia;
+	public void setCwiczenia (boolean string) {
+		this.cwiczenia = string;
 	}
 	public boolean getStres() {
 		return stres;

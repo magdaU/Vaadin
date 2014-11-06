@@ -57,7 +57,6 @@ public class PomiarUI extends UI {
 	protected void init(VaadinRequest request) {
 		Button addButon = new Button("Dodaj");
 		
-
 		VerticalLayout vl = new VerticalLayout();
 		setContent(vl);
 		vl.setMargin(true);
@@ -69,7 +68,6 @@ public class PomiarUI extends UI {
 		vl.addComponent(hl);
 
 		
-
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
 		table.setColumnHeader("skurcz", "Skurczowe");
@@ -113,10 +111,8 @@ public class PomiarUI extends UI {
 				}
 				setModificationEnabled(event.getProperty().getValue()!=null);
 			}
-		
 		});
 		
-
 		table.setSelectable(true);
 		vl.addComponent(table);
 
@@ -132,9 +128,9 @@ public class PomiarUI extends UI {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addWindow(new Formularz2());
-
 			}
 		});
+		
 		editButon.setEnabled(false);
 		deleteButon.setEnabled(false);
 
@@ -148,21 +144,7 @@ public class PomiarUI extends UI {
 					pomiarManager.deletePomiar(pomiar1);
 					pomiary.removeAllItems();
 					pomiary.addAll(pomiarManager.getAll());
-
-				}
-			}
-		});
-		deleteButon.addClickListener(new ClickListener() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (!pomiar1.getLeki().isEmpty()) {
-					pomiarManager.deletePomiar(pomiar1);
-					pomiary.removeAllItems();
-					pomiary.addAll(pomiarManager.getAll());
-					setModificationEnabled(false);
+					setModificationEnabled(false); 
 				}
 			}
 		});
