@@ -1,10 +1,13 @@
 package pl.alium.vaadin;
 
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 
 import pl.alium.vaadin.model.Pomiar;
 import pl.alium.vaadin.services.PomiarManager;
 
+import com.packtpub.vaadin.FlotChart;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -22,6 +25,7 @@ import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -42,6 +46,10 @@ public class PomiarUI extends UI {
 	private PomiarManager pomiarManager = new PomiarManager();
 	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne",
 			false, "pokarm", false, "leki");
+	
+	//stworzenie liste obiektow pommiar
+	private List<Pomiar> pm;
+
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
@@ -50,13 +58,16 @@ public class PomiarUI extends UI {
 	enum Action {
 		ADD, EDIT;
 	}
+
 	final Button deleteButon = new Button("Usuń");
 	final Button editButon = new Button("Edytuj");
+	Button wykresButon = new Button("Wykres pomiaru ciśnienia");
+	final TextArea area1 = new TextArea("Uwaga");
 
 	@Override
 	protected void init(VaadinRequest request) {
 		Button addButon = new Button("Dodaj");
-		
+
 		VerticalLayout vl = new VerticalLayout();
 		setContent(vl);
 		vl.setMargin(true);
@@ -65,9 +76,9 @@ public class PomiarUI extends UI {
 		hl.addComponent(addButon);
 		hl.addComponent(editButon);
 		hl.addComponent(deleteButon);
+		hl.addComponent(wykresButon);
 		vl.addComponent(hl);
 
-		
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
 		table.setColumnHeader("skurcz", "Skurczowe");
@@ -78,6 +89,12 @@ public class PomiarUI extends UI {
 		table.setColumnHeader("pokarm", "Pokarm");
 		table.setColumnHeader("stres", "Stres");
 		table.setColumnHeader("leki", "Leki");
+
+		area1.setWordwrap(true); // The default
+		area1.setValue("Wypelnij formularz z danymi, żeby dodać pomiary ciśnienia");
+		area1.setWidth("800px");
+		area1.setRows(2);
+
 		table.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
@@ -109,17 +126,25 @@ public class PomiarUI extends UI {
 					pomiar1.setStres(selectedPomiar.getStres());
 					pomiar1.setTetno(selectedPomiar.getTetno());
 				}
-				setModificationEnabled(event.getProperty().getValue()!=null);
+				setModificationEnabled(event.getProperty().getValue() != null);
 			}
 		});
-		
 		table.setSelectable(true);
 		vl.addComponent(table);
+
+		vl.addComponent(area1);
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addWindow(new Formularz());
+			}
+		});
+		wykresButon.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				addWindow(new Wykres());
 			}
 		});
 
@@ -130,7 +155,7 @@ public class PomiarUI extends UI {
 				addWindow(new Formularz2());
 			}
 		});
-		
+
 		editButon.setEnabled(false);
 		deleteButon.setEnabled(false);
 
@@ -144,16 +169,17 @@ public class PomiarUI extends UI {
 					pomiarManager.deletePomiar(pomiar1);
 					pomiary.removeAllItems();
 					pomiary.addAll(pomiarManager.getAll());
-					setModificationEnabled(false); 
+					setModificationEnabled(false);
 				}
 			}
 		});
 	}
 
-	public void setModificationEnabled(boolean b){
+	public void setModificationEnabled(boolean b) {
 		editButon.setEnabled(b);
 		deleteButon.setEnabled(b);
 	}
+
 	private class Formularz2 extends Window {
 		private static final long serialVersionUID = 1L;
 
@@ -212,6 +238,49 @@ public class PomiarUI extends UI {
 			});
 
 		}
+	}
+
+	// wykres pomiaru cisnienia [ raport]-
+	private class Wykres extends Window {
+
+		public Wykres() {
+			center();
+			setModal(true);
+			setCaption("Wykres pomiarów ciśnienia");
+
+			final VerticalLayout layout = new VerticalLayout();
+			layout.setMargin(true);
+			setContent(layout);
+
+			FlotChart flot = new FlotChart();
+			flot.setWidth("300px");
+			flot.setHeight("300px");
+
+			// lista pomiarów ciśnienia [ kolekcja]
+			pm = pomiarManager.getAll();
+
+			String daneWykresu = "[["; // inicjalizacja
+			for (int i = 0; i < pm.size(); i++) {
+				if (i == pm.size() - 1) { // jezeli jest to ostatni wpis
+					daneWykresu = daneWykresu + "[" + i + ","
+							+ pm.get(i).getSkurcz() + "]]]";
+				} else {
+					daneWykresu = daneWykresu + "[" + i + ","
+							+ pm.get(i).getSkurcz() + "],";
+				}
+				System.out.println(daneWykresu);
+			}
+
+			// String options =
+			// "{ grid: { backgroundColor: { colors: [\"#fef\", \"#eee\"] } } }";
+			String options = "{" + "grid:{" + "backgroundColor:{" + "colors:["
+					+ "\"#fef\"," + "\"#eee\"" + "]" + "}" + "}" + "}";
+
+			flot.setData(daneWykresu);
+			flot.setOptions(options);
+			layout.addComponent(flot);
+		}
+
 	}
 
 	private class Formularz extends Window {

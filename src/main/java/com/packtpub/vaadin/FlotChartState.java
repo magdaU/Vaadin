@@ -7,9 +7,7 @@ import com.vaadin.shared.ui.JavaScriptComponentState;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * @author ondrej
- */
+
 public class FlotChartState extends JavaScriptComponentState {
 
     private JSONArray data;
