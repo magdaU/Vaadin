@@ -1,5 +1,6 @@
 package pl.alium.vaadin;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -17,13 +18,17 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.ListSet;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
@@ -62,10 +67,27 @@ public class PomiarUI extends UI {
 	final Button deleteButon = new Button("Usuń");
 	final Button editButon = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres pomiaru ciśnienia");
-	final TextArea area1 = new TextArea("Uwaga");
+	final Label labelCisnienie = new Label("!");
 
 	@Override
 	protected void init(VaadinRequest request) {
+		
+		
+		
+		// Find the application directory
+		String basepath = VaadinService.getCurrent()
+		                  .getBaseDirectory().getAbsolutePath();
+
+		System.out.println(basepath);
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath +
+		                        "/image/image2.jpg"));
+
+		// Show the image in the application
+		Image image = new Image("CIŚNIENIE", resource);
+		
+		
+		
 		Button addButon = new Button("Dodaj");
 
 		VerticalLayout vl = new VerticalLayout();
@@ -73,6 +95,7 @@ public class PomiarUI extends UI {
 		vl.setMargin(true);
 
 		HorizontalLayout hl = new HorizontalLayout();
+		hl.addComponent(image);
 		hl.addComponent(addButon);
 		hl.addComponent(editButon);
 		hl.addComponent(deleteButon);
@@ -90,10 +113,9 @@ public class PomiarUI extends UI {
 		table.setColumnHeader("stres", "Stres");
 		table.setColumnHeader("leki", "Leki");
 
-		area1.setWordwrap(true); // The default
-		area1.setValue("Wypelnij formularz z danymi, żeby dodać pomiary ciśnienia");
-		area1.setWidth("800px");
-		area1.setRows(2);
+		labelCisnienie.setCaption("Pomiar cisnienia	Interpretacja....");
+				labelCisnienie.setVisible(true);
+				labelCisnienie.setSizeFull();
 
 		table.addValueChangeListener(new Property.ValueChangeListener() {
 
@@ -131,8 +153,7 @@ public class PomiarUI extends UI {
 		});
 		table.setSelectable(true);
 		vl.addComponent(table);
-
-		vl.addComponent(area1);
+		vl.addComponent(labelCisnienie);
 
 		addButon.addClickListener(new ClickListener() {
 			@Override

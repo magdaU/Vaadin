@@ -1,5 +1,6 @@
 package pl.alium.vaadin;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +15,18 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
@@ -57,9 +63,23 @@ public class PomiarCukruUI extends UI {
 	final Button deleteButonCukier = new Button("Usuń");
 	final Button editButonCukier = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres Poziomu Cukru");
-	final TextArea area1 = new TextArea("Uwaga");
+	final Label labelCisnienie = new Label("!");
 	
 	protected void init(VaadinRequest request) {
+		
+		// Find the application directory
+		String basepath = VaadinService.getCurrent()
+		                  .getBaseDirectory().getAbsolutePath();
+
+		System.out.println(basepath);
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath +
+		                        "/image/image.jpg"));
+
+		// Show the image in the application
+		Image image = new Image("POZIOM CUKRU", resource);
+		
+		
 		Button addButonCukier = new Button("Dodaj");
 
 		VerticalLayout vlC = new VerticalLayout();
@@ -67,17 +87,27 @@ public class PomiarCukruUI extends UI {
 		vlC.setMargin(true);
 
 		HorizontalLayout hlC = new HorizontalLayout();
+		hlC.addComponent(image);
 		hlC.addComponent(addButonCukier);
 		hlC.addComponent(editButonCukier);
 		hlC.addComponent(deleteButonCukier);
 		hlC.addComponent(wykresButon);
-		vlC.addComponent(hlC);
-
 		
-		area1.setWordwrap(true); // The default
-		area1.setValue("Wypełnij formularz z danymi, żeby otrzymać wykres");
-		area1.setWidth("800px");
-		area1.setRows(2);
+		vlC.addComponent(hlC);
+		
+		/*Panel panel = new Panel("Panel Containing a Label");
+		panel.setWidth("300px");
+		panel.setContent(new Label("This is a Label inside a Panel. There is " +
+		              "enough text in the label to make the text " +
+		              "wrap when it exceeds the width of the panel."))*/
+
+		labelCisnienie.setCaption("Poziom glukozy	Interpretacja: " +
+		"Od 70 do 99 mg/dL (od 3.9 do 5.5 mmol/L)	Prawidłowy poziom glukozy." +"\n"+
+		"Od 100 do 125 mg/dL (od 5.6 do 6.9 mmol/L)	Nieprawidłowy poziom glukozy na czczo (stan przedcukrzycowy)" + "\n" +
+		"Co najmniej 126 mg/dL (7.0 mmol/L) w co najmniej dwóch pomiarach	Cukrzyca");
+		labelCisnienie.setVisible(true);
+		labelCisnienie.setSizeFull();
+		
 		
 		// atrybut , a pozniej etykieta
 		tableC.setColumnHeader("poziomCukru", "Poziom cukru");
@@ -119,7 +149,7 @@ public class PomiarCukruUI extends UI {
 
 		tableC.setSelectable(true);
 		vlC.addComponent(tableC);
-		vlC.addComponent(area1);
+		vlC.addComponent(labelCisnienie);
 
 		addButonCukier.addClickListener(new ClickListener() {
 			@Override
