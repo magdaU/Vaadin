@@ -15,10 +15,12 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -26,6 +28,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
@@ -49,9 +52,9 @@ public class PomiarCukruUI extends UI {
 			false, false, "Medocalm", "wysiłek fizyczny-biegi");
 	private BeanItem<PomiarCukru> pomiarItem = new BeanItem<PomiarCukru>(
 			pomiarC1);
-	//stworzenie liste obiektow pommiar
+	// stworzenie liste obiektow pommiar
 	private List<PomiarCukru> pC;
-	
+
 	private BeanItemContainer<PomiarCukru> pomiary = new BeanItemContainer<PomiarCukru>(
 			PomiarCukru.class);
 	final Table tableC = new Table("Pomiary poziomu cukru", pomiary);
@@ -63,23 +66,26 @@ public class PomiarCukruUI extends UI {
 	final Button deleteButonCukier = new Button("Usuń");
 	final Button editButonCukier = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres Poziomu Cukru");
-	final Label labelCisnienie = new Label("!");
-	
+	final Label labelCisnienie = new Label( "Interpetacja wyników.\n" 
+					+ "  * Od 70 do 99 mg/dL (od 3.9 do 5.5 mmol/L)=>Prawidłowy poziom glukozy\n"
+					+ "  * Od 100 do 125 mg/dL (od 5.6 do 6.9 mmol/L)=>Nieprawidłowy poziom glukozy na czczo (stan przedcukrzycowy)\n"
+					+ "  * Co najmniej 126 mg/dL (7.0 mmol/L) w co najmniej dwóch pomiarach=>Cukrzyca. \n",ContentMode.PREFORMATTED);
+	final Link link = new Link("Więcej informacji!", new ExternalResource("http://www.diabetyk.org.pl/"));
+
 	protected void init(VaadinRequest request) {
-		
+
 		// Find the application directory
-		String basepath = VaadinService.getCurrent()
-		                  .getBaseDirectory().getAbsolutePath();
+		String basepath = VaadinService.getCurrent().getBaseDirectory()
+				.getAbsolutePath();
 
 		System.out.println(basepath);
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath +
-		                        "/image/image.jpg"));
+		FileResource resource = new FileResource(new File(basepath
+				+ "/image/image.jpg"));
 
 		// Show the image in the application
 		Image image = new Image("POZIOM CUKRU", resource);
-		
-		
+
 		Button addButonCukier = new Button("Dodaj");
 
 		VerticalLayout vlC = new VerticalLayout();
@@ -92,23 +98,9 @@ public class PomiarCukruUI extends UI {
 		hlC.addComponent(editButonCukier);
 		hlC.addComponent(deleteButonCukier);
 		hlC.addComponent(wykresButon);
-		
-		vlC.addComponent(hlC);
-		
-		/*Panel panel = new Panel("Panel Containing a Label");
-		panel.setWidth("300px");
-		panel.setContent(new Label("This is a Label inside a Panel. There is " +
-		              "enough text in the label to make the text " +
-		              "wrap when it exceeds the width of the panel."))*/
 
-		labelCisnienie.setCaption("Poziom glukozy	Interpretacja: " +
-		"Od 70 do 99 mg/dL (od 3.9 do 5.5 mmol/L)	Prawidłowy poziom glukozy." +"\n"+
-		"Od 100 do 125 mg/dL (od 5.6 do 6.9 mmol/L)	Nieprawidłowy poziom glukozy na czczo (stan przedcukrzycowy)" + "\n" +
-		"Co najmniej 126 mg/dL (7.0 mmol/L) w co najmniej dwóch pomiarach	Cukrzyca");
-		labelCisnienie.setVisible(true);
-		labelCisnienie.setSizeFull();
-		
-		
+		vlC.addComponent(hlC);
+
 		// atrybut , a pozniej etykieta
 		tableC.setColumnHeader("poziomCukru", "Poziom cukru");
 		tableC.setColumnHeader("czasPomiaruCukru", "Data pomiaru cukru");
@@ -150,14 +142,15 @@ public class PomiarCukruUI extends UI {
 		tableC.setSelectable(true);
 		vlC.addComponent(tableC);
 		vlC.addComponent(labelCisnienie);
-
+		vlC.addComponent(link);
+		
 		addButonCukier.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				addWindow(new Formularz());
 			}
 		});
-		
+
 		wykresButon.addClickListener(new ClickListener() {
 
 			@Override
@@ -176,6 +169,7 @@ public class PomiarCukruUI extends UI {
 		});
 		editButonCukier.setEnabled(false);
 		deleteButonCukier.setEnabled(false);
+	
 
 		deleteButonCukier.addClickListener(new ClickListener() {
 
@@ -193,6 +187,7 @@ public class PomiarCukruUI extends UI {
 				}
 			}
 		});
+		
 	}
 
 	public void setModificationEnabled(boolean b) {
@@ -253,7 +248,7 @@ public class PomiarCukruUI extends UI {
 					close();
 				}
 			});
-		
+
 		}
 	}
 

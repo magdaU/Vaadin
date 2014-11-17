@@ -54,5 +54,8 @@ public class PomiarManager {
 			}
 		}
 		db.remove(pomiarToRemove);
+	}
+	public void sort(Object[] propertyId, boolean[] ascending){
+		System.out.println("DUpa");
 	}	
 }

@@ -18,17 +18,20 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.ListSet;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field.ValueChangeEvent;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
@@ -59,6 +62,7 @@ public class PomiarUI extends UI {
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
 	final Table table = new Table("Pomiary cisnienia", pomiary);
+	final Link link = new Link("Więcej informacji!", new ExternalResource("http://nadcisnienie.mp.pl/"));
 
 	enum Action {
 		ADD, EDIT;
@@ -67,40 +71,45 @@ public class PomiarUI extends UI {
 	final Button deleteButon = new Button("Usuń");
 	final Button editButon = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres pomiaru ciśnienia");
-	final Label labelCisnienie = new Label("!");
 
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		
-		
 		// Find the application directory
-		String basepath = VaadinService.getCurrent()
-		                  .getBaseDirectory().getAbsolutePath();
-
+		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		String basepath2= VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+		
 		System.out.println(basepath);
+		System.out.println(basepath2);
+		
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath +
-		                        "/image/image2.jpg"));
+		FileResource resource = new FileResource(new File(basepath + "/image/image2.jpg"));
+		FileResource resource2= new FileResource(new File(basepath2 + "/image/image3.png"));
 
 		// Show the image in the application
-		Image image = new Image("CIŚNIENIE", resource);
-		
+		Image image = new Image("Pomiary cisnienia krwi", resource);
+		Image image2= new Image("Interpretacja wyników", resource2);
 		
 		
 		Button addButon = new Button("Dodaj");
-
 		VerticalLayout vl = new VerticalLayout();
 		setContent(vl);
 		vl.setMargin(true);
+		
+		
 
 		HorizontalLayout hl = new HorizontalLayout();
 		hl.addComponent(image);
-		hl.addComponent(addButon);
-		hl.addComponent(editButon);
-		hl.addComponent(deleteButon);
-		hl.addComponent(wykresButon);
+		hl.setMargin(true);
 		vl.addComponent(hl);
+		
+		HorizontalLayout h2= new HorizontalLayout();
+		h2.addComponent(addButon);
+		h2.addComponent(editButon);
+		h2.addComponent(deleteButon);
+		h2.addComponent(wykresButon);
+
 
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
@@ -113,9 +122,7 @@ public class PomiarUI extends UI {
 		table.setColumnHeader("stres", "Stres");
 		table.setColumnHeader("leki", "Leki");
 
-		labelCisnienie.setCaption("Pomiar cisnienia	Interpretacja....");
-				labelCisnienie.setVisible(true);
-				labelCisnienie.setSizeFull();
+		
 
 		table.addValueChangeListener(new Property.ValueChangeListener() {
 
@@ -152,8 +159,11 @@ public class PomiarUI extends UI {
 			}
 		});
 		table.setSelectable(true);
+		vl.addComponent(h2);
 		vl.addComponent(table);
-		vl.addComponent(labelCisnienie);
+		vl.addComponent(image2);
+		vl.addComponent(link);
+		
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
