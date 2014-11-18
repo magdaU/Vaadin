@@ -54,15 +54,16 @@ public class PomiarUI extends UI {
 	private PomiarManager pomiarManager = new PomiarManager();
 	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne",
 			false, "pokarm", false, "leki");
-	
-	//stworzenie liste obiektow pommiar
+
+	// stworzenie liste obiektow pommiar
 	private List<Pomiar> pm;
 
 	private BeanItem<Pomiar> pomiarItem = new BeanItem<Pomiar>(pomiar1);
 	private BeanItemContainer<Pomiar> pomiary = new BeanItemContainer<Pomiar>(
 			Pomiar.class);
 	final Table table = new Table("Pomiary cisnienia", pomiary);
-	final Link link = new Link("Więcej informacji!", new ExternalResource("http://nadcisnienie.mp.pl/"));
+	final Link link = new Link("Więcej informacji!", new ExternalResource(
+			"http://nadcisnienie.mp.pl/"));
 
 	enum Action {
 		ADD, EDIT;
@@ -72,44 +73,43 @@ public class PomiarUI extends UI {
 	final Button editButon = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres pomiaru ciśnienia");
 
-	
 	@Override
 	protected void init(VaadinRequest request) {
-		
+
 		// Find the application directory
-		String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		String basepath2= VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-		
+		String basepath = VaadinService.getCurrent().getBaseDirectory()
+				.getAbsolutePath();
+		String basepath2 = VaadinService.getCurrent().getBaseDirectory()
+				.getAbsolutePath();
+
 		System.out.println(basepath);
 		System.out.println(basepath2);
-		
+
 		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath + "/image/image2.jpg"));
-		FileResource resource2= new FileResource(new File(basepath2 + "/image/image3.png"));
+		FileResource resource = new FileResource(new File(basepath
+				+ "/image/image2.jpg"));
+		FileResource resource2 = new FileResource(new File(basepath2
+				+ "/image/image3.png"));
 
 		// Show the image in the application
 		Image image = new Image("Pomiary cisnienia krwi", resource);
-		Image image2= new Image("Interpretacja wyników", resource2);
-		
-		
+		Image image2 = new Image("Interpretacja wyników", resource2);
+
 		Button addButon = new Button("Dodaj");
 		VerticalLayout vl = new VerticalLayout();
 		setContent(vl);
 		vl.setMargin(true);
-		
-		
 
 		HorizontalLayout hl = new HorizontalLayout();
 		hl.addComponent(image);
 		hl.setMargin(true);
 		vl.addComponent(hl);
-		
-		HorizontalLayout h2= new HorizontalLayout();
+
+		HorizontalLayout h2 = new HorizontalLayout();
 		h2.addComponent(addButon);
 		h2.addComponent(editButon);
 		h2.addComponent(deleteButon);
 		h2.addComponent(wykresButon);
-
 
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "tetno");
@@ -122,8 +122,6 @@ public class PomiarUI extends UI {
 		table.setColumnHeader("stres", "Stres");
 		table.setColumnHeader("leki", "Leki");
 
-		
-
 		table.addValueChangeListener(new Property.ValueChangeListener() {
 
 			@Override
@@ -132,28 +130,27 @@ public class PomiarUI extends UI {
 				// TODO Auto-generated method stub
 				Pomiar selectedPomiar = (Pomiar) table.getValue();
 				if (selectedPomiar == null) {
-					pomiar1.setCwiczenia(false);
-					pomiar1.setCzasPomiaru("");
 					pomiar1.setId(null);
-					pomiar1.setInne("");
+					pomiar1.setSkurcz(0);
+					pomiar1.setRozkurcz(0);
+					pomiar1.setTetno(0);
+					pomiar1.setCzasPomiaru("");
+					pomiar1.setStres(false);
+					pomiar1.setCwiczenia(false);
 					pomiar1.setLeki("");
 					pomiar1.setPokarm("");
-					pomiar1.setRozkurcz(0);
-					pomiar1.setSkurcz(0);
-					pomiar1.setStres(false);
-					pomiar1.setTetno(0);
-
+					pomiar1.setInne("");
 				} else {
-					pomiar1.setCwiczenia(selectedPomiar.getCwiczenia());
-					pomiar1.setCzasPomiaru(selectedPomiar.getCzasPomiaru());
 					pomiar1.setId(selectedPomiar.getId());
-					pomiar1.setInne(selectedPomiar.getInne());
+					pomiar1.setSkurcz(selectedPomiar.getSkurcz());
+					pomiar1.setRozkurcz(selectedPomiar.getRozkurcz());
+					pomiar1.setTetno(selectedPomiar.getTetno());
+					pomiar1.setCzasPomiaru(selectedPomiar.getCzasPomiaru());
+					pomiar1.setCwiczenia(selectedPomiar.getCwiczenia());
+					pomiar1.setStres(selectedPomiar.getStres());
 					pomiar1.setLeki(selectedPomiar.getLeki());
 					pomiar1.setPokarm(selectedPomiar.getPokarm());
-					pomiar1.setRozkurcz(selectedPomiar.getRozkurcz());
-					pomiar1.setSkurcz(selectedPomiar.getSkurcz());
-					pomiar1.setStres(selectedPomiar.getStres());
-					pomiar1.setTetno(selectedPomiar.getTetno());
+					pomiar1.setInne(selectedPomiar.getInne());			
 				}
 				setModificationEnabled(event.getProperty().getValue() != null);
 			}
@@ -163,7 +160,6 @@ public class PomiarUI extends UI {
 		vl.addComponent(table);
 		vl.addComponent(image2);
 		vl.addComponent(link);
-		
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
@@ -228,8 +224,8 @@ public class PomiarUI extends UI {
 			// Nazwa, atrybut
 
 			form.addComponent(binder.buildAndBind("Tetno", "tetno"));
-			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
 			form.addComponent(binder.buildAndBind("Skurcz", "skurcz"));
+			form.addComponent(binder.buildAndBind("Rozkurcz", "rozkurcz"));
 			form.addComponent(binder.buildAndBind("Data", "czasPomiaru"));
 			form.addComponent(binder.buildAndBind("Inne", "inne"));
 			form.addComponent(binder.buildAndBind("Ćwiczenia", "cwiczenia"));
@@ -239,10 +235,12 @@ public class PomiarUI extends UI {
 			binder.setBuffered(false);
 
 			VerticalLayout vl = new VerticalLayout();
+			vl.setMargin(true);
 			vl.addComponent(form);
 			HorizontalLayout hl = new HorizontalLayout();
 			hl.addComponent(saveButton1);
 			hl.addComponent(cancelButton1);
+			hl.setMargin(true);
 			vl.addComponent(hl);
 			setContent(vl);
 
@@ -264,10 +262,8 @@ public class PomiarUI extends UI {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					close();
-
 				}
 			});
-
 		}
 	}
 
@@ -278,14 +274,19 @@ public class PomiarUI extends UI {
 			center();
 			setModal(true);
 			setCaption("Wykres pomiarów ciśnienia");
+			
 
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setMargin(true);
 			setContent(layout);
 
+			String labelSkurcz = "Skurczowe";
+			String labelRozkurcz = "Rozkurczowe";
+			String labelTetno = "Tetno";
+
 			FlotChart flot = new FlotChart();
-			flot.setWidth("300px");
-			flot.setHeight("300px");
+			flot.setWidth("500px");
+			flot.setHeight("500px");
 
 			// lista pomiarów ciśnienia [ kolekcja]
 			pm = pomiarManager.getAll();
@@ -302,16 +303,50 @@ public class PomiarUI extends UI {
 				System.out.println(daneWykresu);
 			}
 
-			// String options =
-			// "{ grid: { backgroundColor: { colors: [\"#fef\", \"#eee\"] } } }";
+			String daneWykresuSkurcz = "[";
+			for (int i = 0; i < pm.size(); i++) {
+				if (i == pm.size() - 1) {
+					daneWykresuSkurcz += "[" + i + "," + pm.get(i).getSkurcz()
+							+ "]]";
+				} else {
+					daneWykresuSkurcz += "[" + i + "," + pm.get(i).getSkurcz()
+							+ "],";
+				}
+			}
+
+			String daneWykresuRozkurcz = "[";
+			for (int i = 0; i < pm.size(); i++) {
+				if (i == pm.size() - 1) {
+					daneWykresuRozkurcz += "[" + i + ","
+							+ pm.get(i).getRozkurcz() + "]]";
+				} else {
+					daneWykresuRozkurcz += "[" + i + ","
+							+ pm.get(i).getRozkurcz() + "],";
+				}
+			}
+
+			String daneWykresuTetno = "[";
+			for (int i = 0; i < pm.size(); i++) {
+				if (i == pm.size() - 1) {
+					daneWykresuTetno += "[" + i + "," + pm.get(i).getTetno()
+							+ "]]";
+				} else {
+					daneWykresuTetno += "[" + i + "," + pm.get(i).getTetno()
+							+ "],";
+				}
+			}
+
 			String options = "{" + "grid:{" + "backgroundColor:{" + "colors:["
 					+ "\"#fef\"," + "\"#eee\"" + "]" + "}" + "}" + "}";
+			String daneWykresuS = "[{label: " + labelSkurcz + ", data: "
+					+ daneWykresuSkurcz + " },{label: " + labelRozkurcz
+					+ ", data: " + daneWykresuRozkurcz + "},{label: "
+					+ labelTetno + ", data: " + daneWykresuTetno + "}]";
 
-			flot.setData(daneWykresu);
+			flot.setData(daneWykresuS);
 			flot.setOptions(options);
 			layout.addComponent(flot);
 		}
-
 	}
 
 	private class Formularz extends Window {
@@ -321,8 +356,10 @@ public class PomiarUI extends UI {
 			center();
 			setModal(true);
 			setCaption("Okno formularza");
+			
 
 			FormLayout form = new FormLayout();
+			form.setMargin(true);
 			final FieldGroup binder = new FieldGroup(pomiarItem);
 
 			Button saveButton1 = new Button("Zapisz");

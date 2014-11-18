@@ -20,42 +20,28 @@ public class MyVaadinUI extends UI {
 	@VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
-	
-    @Override
-    protected void init(VaadinRequest request) {
-    	System.out.println("TEST");
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        setContent(layout);
 
-        FlotChart flot = new FlotChart();
-        flot.setWidth("300px");
-        flot.setHeight("300px");
+	@Override
+	protected void init(VaadinRequest request) {
+		System.out.println("TEST");
+		final VerticalLayout layout = new VerticalLayout();
+		layout.setMargin(true);
+		setContent(layout);
 
-        //String options = "{ grid: { backgroundColor: { colors: [\"#fef\", \"#eee\"] } } }";
-        String options =
-        "{" +
-            "grid:{"         +
-                "backgroundColor:{" +
-                    "colors:["+
-                    "\"#fef\"," +
-                            "\"#eee\""+
-                    "]"+
-                "}"+
-            "}"+
-        "}";
-        String data =
-        "[" +
-            "[" +
-                "[0, 5]," +
-                "[2, 7]," +
-                "[4, 8]," +
-                "[10, 5]" +
-            "]" +
-        "]";
+		FlotChart flot = new FlotChart();
+		flot.setWidth("300px");
+		flot.setHeight("300px");
 
-        flot.setData(data);
-        flot.setOptions(options);
-        layout.addComponent(flot);
-    }
+		// String options =
+		// "{ grid: { backgroundColor: { colors: [\"#fef\", \"#eee\"] } } }";
+		String options = "{" + "grid:{" + "backgroundColor:{" + "colors:["
+				+ "\"#fef\"," + "\"#eee\"" + "]" + "}" + "}" + "}";
+		String data = "[" + "[" + "[0, 5]," + "[2, 7]," + "[4, 8]," + "[10, 5]"
+				+ "]" + "]";
+
+		flot.setData(data);
+		flot.setOptions(options);
+		layout.addComponent(flot);
+
+	}
 }

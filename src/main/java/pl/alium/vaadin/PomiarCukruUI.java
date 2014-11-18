@@ -66,11 +66,14 @@ public class PomiarCukruUI extends UI {
 	final Button deleteButonCukier = new Button("Usuń");
 	final Button editButonCukier = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres Poziomu Cukru");
-	final Label labelCisnienie = new Label( "Interpetacja wyników.\n" 
+	final Label labelCisnienie = new Label(
+			"Interpetacja wyników.\n"
 					+ "  * Od 70 do 99 mg/dL (od 3.9 do 5.5 mmol/L)=>Prawidłowy poziom glukozy\n"
 					+ "  * Od 100 do 125 mg/dL (od 5.6 do 6.9 mmol/L)=>Nieprawidłowy poziom glukozy na czczo (stan przedcukrzycowy)\n"
-					+ "  * Co najmniej 126 mg/dL (7.0 mmol/L) w co najmniej dwóch pomiarach=>Cukrzyca. \n",ContentMode.PREFORMATTED);
-	final Link link = new Link("Więcej informacji!", new ExternalResource("http://www.diabetyk.org.pl/"));
+					+ "  * Co najmniej 126 mg/dL (7.0 mmol/L) w co najmniej dwóch pomiarach=>Cukrzyca. \n",
+			ContentMode.PREFORMATTED);
+	final Link link = new Link("Więcej informacji!", new ExternalResource(
+			"http://www.diabetyk.org.pl/"));
 
 	protected void init(VaadinRequest request) {
 
@@ -143,7 +146,7 @@ public class PomiarCukruUI extends UI {
 		vlC.addComponent(tableC);
 		vlC.addComponent(labelCisnienie);
 		vlC.addComponent(link);
-		
+
 		addButonCukier.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -169,7 +172,6 @@ public class PomiarCukruUI extends UI {
 		});
 		editButonCukier.setEnabled(false);
 		deleteButonCukier.setEnabled(false);
-	
 
 		deleteButonCukier.addClickListener(new ClickListener() {
 
@@ -187,7 +189,7 @@ public class PomiarCukruUI extends UI {
 				}
 			}
 		});
-		
+
 	}
 
 	public void setModificationEnabled(boolean b) {
