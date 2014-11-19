@@ -29,9 +29,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -81,13 +79,22 @@ public class PomiarCukruUI extends UI {
 		String basepath = VaadinService.getCurrent().getBaseDirectory()
 				.getAbsolutePath();
 
+		String basepath2 = VaadinService.getCurrent().getBaseDirectory()
+				.getAbsolutePath();
+
 		System.out.println(basepath);
+		System.out.println(basepath2);
+
 		// Image as a file resource
 		FileResource resource = new FileResource(new File(basepath
 				+ "/image/image.jpg"));
 
+		FileResource resource2 = new FileResource(new File(basepath
+				+ "/image/sugar.jpg"));
+
 		// Show the image in the application
 		Image image = new Image("POZIOM CUKRU", resource);
+		Image image2 = new Image("Interpretacja wyników", resource2);
 
 		Button addButonCukier = new Button("Dodaj");
 
@@ -97,12 +104,14 @@ public class PomiarCukruUI extends UI {
 
 		HorizontalLayout hlC = new HorizontalLayout();
 		hlC.addComponent(image);
-		hlC.addComponent(addButonCukier);
-		hlC.addComponent(editButonCukier);
-		hlC.addComponent(deleteButonCukier);
-		hlC.addComponent(wykresButon);
-
+		hlC.setMargin(true);
 		vlC.addComponent(hlC);
+
+		HorizontalLayout hlC2 = new HorizontalLayout();
+		hlC2.addComponent(addButonCukier);
+		hlC2.addComponent(editButonCukier);
+		hlC2.addComponent(deleteButonCukier);
+		hlC2.addComponent(wykresButon);
 
 		// atrybut , a pozniej etykieta
 		tableC.setColumnHeader("poziomCukru", "Poziom cukru");
@@ -143,9 +152,15 @@ public class PomiarCukruUI extends UI {
 		});
 
 		tableC.setSelectable(true);
+		vlC.addComponent(hlC2);
 		vlC.addComponent(tableC);
+		vlC.addComponent(image2);
 		vlC.addComponent(labelCisnienie);
 		vlC.addComponent(link);
+
+		// widzialnosc tabel i ich kolejnosc
+		tableC.setVisibleColumns(new Object[] { "poziomCukru",
+				"czasPomiaruCukru", "stres", "leki", "pokarm", "inne" });
 
 		addButonCukier.addClickListener(new ClickListener() {
 			@Override
@@ -201,11 +216,19 @@ public class PomiarCukruUI extends UI {
 		private static final long serialVersionUID = 1L;
 
 		public Formularz2() {
+			/*
+			 * setHeight("200px"); setWidth("200px");
+			 */
 			center();
 			setModal(true);
 			setCaption("Okno formularza");
+			/*
+			 * setWidth( 600, Sizeable.UNITS_PIXELS); setHeight( 300,
+			 * Sizeable.UNITS_PIXELS);
+			 */
 
 			FormLayout form = new FormLayout();
+			form.setSizeFull();
 			final FieldGroup binder = new FieldGroup(pomiarItem);
 
 			Button saveButton1 = new Button("Zapisz");
@@ -294,7 +317,6 @@ public class PomiarCukruUI extends UI {
 			flot.setOptions(options);
 			layout.addComponent(flot);
 		}
-
 	}
 
 	private class Formularz extends Window {
@@ -351,4 +373,5 @@ public class PomiarCukruUI extends UI {
 			});
 		}
 	}
+
 }

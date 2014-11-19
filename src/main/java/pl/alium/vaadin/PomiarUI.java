@@ -112,9 +112,9 @@ public class PomiarUI extends UI {
 		h2.addComponent(wykresButon);
 
 		// atrybut-identyfikacja kolumny, etykieta
-		table.setColumnHeader("tetno", "tetno");
-		table.setColumnHeader("skurcz", "Skurczowe");
-		table.setColumnHeader("rozkurcz", "Rozkurczowe");
+		table.setColumnHeader("tetno", "Tętno");
+		table.setColumnHeader("skurcz", "Skurcz");
+		table.setColumnHeader("rozkurcz", "Rozkurcz");
 		table.setColumnHeader("czasPomiaru", "Czas pomiaru");
 		table.setColumnHeader("inne", "Inne");
 		table.setColumnHeader("cwiczenia", "Cwiczenia");
@@ -150,11 +150,16 @@ public class PomiarUI extends UI {
 					pomiar1.setStres(selectedPomiar.getStres());
 					pomiar1.setLeki(selectedPomiar.getLeki());
 					pomiar1.setPokarm(selectedPomiar.getPokarm());
-					pomiar1.setInne(selectedPomiar.getInne());			
+					pomiar1.setInne(selectedPomiar.getInne());
 				}
 				setModificationEnabled(event.getProperty().getValue() != null);
 			}
 		});
+		// widzialnosc tabel i ich kolejnosc
+		table.setVisibleColumns(new Object[] { "tetno", "skurcz", "rozkurcz",
+				"czasPomiaru", "stres", "leki", "pokarm", "inne" });
+
+		// mozna wybrac dany wiersz z kolumny
 		table.setSelectable(true);
 		vl.addComponent(h2);
 		vl.addComponent(table);
@@ -187,7 +192,6 @@ public class PomiarUI extends UI {
 		deleteButon.setEnabled(false);
 
 		deleteButon.addClickListener(new ClickListener() {
-
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -212,8 +216,8 @@ public class PomiarUI extends UI {
 
 		public Formularz2() {
 			center();
-			setModal(true);
-			setCaption("Okno formularza");
+			setModal(true); // nie mozna modyfikowac jak jest otwarte okienko
+			setCaption("Okno formularza"); // tytul okna
 
 			FormLayout form = new FormLayout();
 			final FieldGroup binder = new FieldGroup(pomiarItem);
@@ -274,7 +278,6 @@ public class PomiarUI extends UI {
 			center();
 			setModal(true);
 			setCaption("Wykres pomiarów ciśnienia");
-			
 
 			final VerticalLayout layout = new VerticalLayout();
 			layout.setMargin(true);
@@ -356,7 +359,6 @@ public class PomiarUI extends UI {
 			center();
 			setModal(true);
 			setCaption("Okno formularza");
-			
 
 			FormLayout form = new FormLayout();
 			form.setMargin(true);
