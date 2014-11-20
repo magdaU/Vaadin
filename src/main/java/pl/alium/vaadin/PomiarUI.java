@@ -2,12 +2,9 @@ package pl.alium.vaadin;
 
 import java.io.File;
 import java.util.List;
-
 import javax.servlet.annotation.WebServlet;
-
 import pl.alium.vaadin.model.Pomiar;
 import pl.alium.vaadin.services.PomiarManager;
-
 import com.packtpub.vaadin.FlotChart;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -17,30 +14,28 @@ import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.ListSet;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Field.ValueChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 
 @Title("Aplikacja do rejestracji pomiarów ciśnienia")
-@Theme("mytheme")
+@Theme("runo")
 @SuppressWarnings("serial")
 public class PomiarUI extends UI {
 
@@ -48,6 +43,8 @@ public class PomiarUI extends UI {
 
 	@WebServlet(value = "/cisnienie/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = PomiarUI.class)
+	
+	
 	public static class Servlet extends VaadinServlet {
 	}
 
@@ -64,18 +61,26 @@ public class PomiarUI extends UI {
 	final Table table = new Table("Pomiary cisnienia", pomiary);
 	final Link link = new Link("Więcej informacji!", new ExternalResource(
 			"http://nadcisnienie.mp.pl/"));
+	final Link linkCukier= new Link("PRZEJDZ DO POMIARU CUKRU===>", new ExternalResource(
+			"http://localhost:8080/cukier"));
+	Label CISNLabel = new Label("<b><h2><em>BADANIE POZIOMU CIŚNIENIA KRWI</em></h2></b>",ContentMode.HTML);
 
-	enum Action {
-		ADD, EDIT;
-	}
-
+	Button addButon = new Button("Dodaj");
 	final Button deleteButon = new Button("Usuń");
 	final Button editButon = new Button("Edytuj");
 	Button wykresButon = new Button("Wykres pomiaru ciśnienia");
 
+	
+	enum Action {
+		ADD, EDIT;
+	}
+
+	
+	
+	
 	@Override
 	protected void init(VaadinRequest request) {
-
+		
 		// Find the application directory
 		String basepath = VaadinService.getCurrent().getBaseDirectory()
 				.getAbsolutePath();
@@ -92,24 +97,34 @@ public class PomiarUI extends UI {
 				+ "/image/image3.png"));
 
 		// Show the image in the application
-		Image image = new Image("Pomiary cisnienia krwi", resource);
+		Image image = new Image("", resource);
 		Image image2 = new Image("Interpretacja wyników", resource2);
 
-		Button addButon = new Button("Dodaj");
 		VerticalLayout vl = new VerticalLayout();
+		vl.addComponent(CISNLabel);
 		setContent(vl);
 		vl.setMargin(true);
+		vl.addComponent(linkCukier);
+		vl.setComponentAlignment(linkCukier, Alignment.MIDDLE_RIGHT);
 
 		HorizontalLayout hl = new HorizontalLayout();
-		hl.addComponent(image);
+		hl.setSpacing(true);
 		hl.setMargin(true);
 		vl.addComponent(hl);
 
-		HorizontalLayout h2 = new HorizontalLayout();
-		h2.addComponent(addButon);
-		h2.addComponent(editButon);
-		h2.addComponent(deleteButon);
-		h2.addComponent(wykresButon);
+		HorizontalLayout hl2 = new HorizontalLayout();
+		hl2.setSpacing(true);
+		hl2.addComponent(image);
+		
+		VerticalLayout toolbar = new VerticalLayout();
+		hl2.addComponent(toolbar);
+		toolbar.addComponent(addButon);
+		toolbar.addComponent(editButon);
+		toolbar.addComponent(deleteButon);
+		toolbar.addComponent(wykresButon);
+		hl2.setComponentAlignment(toolbar, Alignment.MIDDLE_LEFT);
+		
+		
 
 		// atrybut-identyfikacja kolumny, etykieta
 		table.setColumnHeader("tetno", "Tętno");
@@ -157,14 +172,32 @@ public class PomiarUI extends UI {
 		});
 		// widzialnosc tabel i ich kolejnosc
 		table.setVisibleColumns(new Object[] { "tetno", "skurcz", "rozkurcz",
-				"czasPomiaru", "stres", "leki", "pokarm", "inne" });
+				"czasPomiaru", "stres", "leki","cwiczenia", "pokarm", "inne"});
 
 		// mozna wybrac dany wiersz z kolumny
 		table.setSelectable(true);
-		vl.addComponent(h2);
+		vl.addComponent(hl2);
 		vl.addComponent(table);
 		vl.addComponent(image2);
 		vl.addComponent(link);
+		
+		
+		//link - Przejdz do strony Pomiar Cukru
+		linkCukier.setTargetName("_blank");
+		linkCukier.setTargetBorder(Link.TARGET_BORDER_NONE);
+		linkCukier.setTargetHeight(600);
+		linkCukier.setTargetWidth(700);
+		
+		//link wiecej informacji
+		link.setTargetName("_blank");
+		link.setTargetBorder(Link.TARGET_BORDER_NONE);
+		link.setTargetHeight(600);
+		link.setTargetWidth(700);
+				
+		// szerokośc i wysokosc tabeli, oraz max 10 rekodrów widoczne w tabeli
+		table.setWidth("100%");
+		table.setHeight("80%");
+		table.setPageLength(8);
 
 		addButon.addClickListener(new ClickListener() {
 			@Override
@@ -382,9 +415,11 @@ public class PomiarUI extends UI {
 
 			VerticalLayout vl = new VerticalLayout();
 			vl.addComponent(form);
+			vl.setMargin(true);
 			HorizontalLayout hl = new HorizontalLayout();
 			hl.addComponent(saveButton1);
 			hl.addComponent(cancelButton1);
+			hl.setMargin(true);
 			vl.addComponent(hl);
 			setContent(vl);
 

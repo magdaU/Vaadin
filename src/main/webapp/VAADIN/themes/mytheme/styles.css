@@ -5,7 +5,7 @@
  * @param {value} $var - the value to search for
  * @param {bool} $recursive (false) - should any contained lists be checked for the value
  * 
- * @return {bool}??true if the value is found from the list, false otherwise
+ * @return {bool} true if the value is found from the list, false otherwise
  * 
  * @group lists
  */
@@ -258,7 +258,7 @@
  * 
  * @param {color} $color ($v-background-color) - The base color for the gradient color stops
  * @param {list} $gradient ($v-gradient) - Valo-specific gradient value. See the documentation for $v-gradient.
- * @param {color}??$fallback (null) - A fallback color for browser which do not support linear gradients (IE8 and IE9 in particular). If null, the base $color is used instead.
+ * @param {color} $fallback (null) - A fallback color for browser which do not support linear gradients (IE8 and IE9 in particular). If null, the base $color is used instead.
  * @param {string} $direction (to bottom) - the direction of the linear gradient. The color stops are by default so that a lighter shade is at the start and a darker shade is at the end.
  */
 
@@ -267,7 +267,7 @@
  *
  * @group style
  *
- * @param {list}??$border ($v-border) - CSS border value which can contain any of the color keywords
+ * @param {list} $border ($v-border) - CSS border value which can contain any of the color keywords
  * @param {color} $color ($v-background-color) - the base color to which the color keywords are applied to
  * @param {color} $context (null) - context/surrounding color where the border is expected to appear. The color of the final border is the darker of the two parameters passed to this function.
  * @param {number} $strength (1) - adjustment for the border contrast
@@ -280,7 +280,7 @@
  * 
  * @param {string} $to-align (()) - The selector to match the elements which you wish to align vertically. The targeted elements should be inline or inline-block elements.
  * @param {string} $align (middle) - The vertical-align value, e.g. top, middle, bottom
- * @param {string}??$pseudo-element (after) - Which pseudo element to use for the vertical align guide
+ * @param {string} $pseudo-element (after) - Which pseudo element to use for the vertical align guide
  * 
  * @group util
  */
@@ -547,7 +547,7 @@
  * Outputs the selectors and properties for the Accordion component.
  *
  * @param {string} $primary-stylename (v-accordion) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  * @group accordion
  */
 
@@ -555,7 +555,7 @@
  * Outputs the selectors and properties for the Button component.
  *
  * @param {string} $primary-stylename (v-button) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group button
  */
@@ -578,7 +578,7 @@
  * Outputs the selectors and properties for the CheckBox component.
  *
  * @param {string} $primary-stylename (v-checkbox) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group checkbox
  */
@@ -596,7 +596,7 @@
  * Outputs the selectors and properties for the ComboBox component.
  *
  * @param {string} $primary-stylename (v-filterselect) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group combobox
  */
@@ -628,7 +628,7 @@
  * Outputs the selectors and properties for the DateField component.
  *
  * @param {string} $primary-stylename (v-datefield) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group datefield
  */
@@ -653,7 +653,7 @@
  * Outputs the selectors and properties for the FormLayout component.
  *
  * @param {string} $primary-stylename (v-formlayout) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group formlayout
  */
@@ -807,7 +807,7 @@
  * Outputs the selectors and properties for the TextArea component.
  *
  * @param {string} $primary-stylename (v-textarea) - the primary style name for the selectors
- * @param {bool}??$include-additional-styles - should the mixin output all the different style variations of the component
+ * @param {bool} $include-additional-styles - should the mixin output all the different style variations of the component
  *
  * @group textarea
  */
@@ -836,7 +836,7 @@
 /**
  *
  *
- * @param {string} $primary-stylename (v-upload) - 
+ * @param {string} $primary-stylename (v-upload) -
  *
  * @group upload
  */
@@ -903,7 +903,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.3.2";
+	content: "7.3.5";
 }
 
 .v-widget {
@@ -989,6 +989,11 @@
 
 .v-ios5.v-webkit .v-scrollable {
 	-webkit-overflow-scrolling: none;
+}
+
+.v-webkit.v-ios .v-browserframe {
+	-webkit-overflow-scrolling: touch;
+	overflow: auto;
 }
 
 .v-assistive-device-only {
@@ -3841,19 +3846,27 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme [class*="margin-top"] > tbody > [class*="firstrow"] > td {
-	padding-top: 0;
+	padding-top: 37px;
 }
 
 .mytheme [class*="margin-bottom"] > tbody > [class*="lastrow"] > td {
-	padding-bottom: 0;
+	padding-bottom: 37px;
 }
 
 .mytheme [class*="margin-left"] > tbody > [class*="row"] > [class*="captioncell"] {
-	padding-left: 0;
+	padding-left: 37px;
+}
+
+.mytheme [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, .mytheme [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
+	left: 37px;
 }
 
 .mytheme [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"] {
-	padding-right: 0;
+	padding-right: 37px;
+}
+
+.mytheme [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, .mytheme [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
+	right: 37px;
 }
 
 .mytheme .v-formlayout > table {
@@ -3889,6 +3902,8 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .v-formlayout-contentcell  > .v-label-h2, .mytheme .v-formlayout-contentcell  > .v-label-h3, .mytheme .v-formlayout-contentcell  > .v-label-h4 {
 	position: absolute;
 	left: 0;
+	right: 0;
+	width: auto !important;
 	margin-top: -0.5em;
 	padding-bottom: 0.5em;
 	border-bottom: 1px solid #dfdfdf;
@@ -3898,7 +3913,7 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0;
 }
 
-.mytheme .v-formlayout.light  > table > tbody > [class*="row"] > td {
+.mytheme .v-formlayout.light  > table > tbody > tr > td {
 	padding-top: 0;
 	height: 37px;
 	border-bottom: 1px solid #eaeaea;
@@ -3908,11 +3923,15 @@ div.v-layout.v-horizontal.v-widget {
 	border-bottom: none;
 }
 
-.mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="captioncell"] {
+.mytheme .v-formlayout.light  > table > tbody > tr > [class*="captioncell"] {
 	color: #7d7d7d;
 	text-align: right;
 	padding-left: 13px;
 	line-height: 37px;
+}
+
+.mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"] {
+	padding-right: 0;
 }
 
 .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-textfield, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-textarea, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-filterselect, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-datefield, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-filterselect-input, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-datefield-textfield {
@@ -3985,6 +4004,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
 	border-bottom: none;
+	left: 0;
+	right: 0;
 }
 
 .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme .v-formlayout.light  > table > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
@@ -5141,6 +5162,11 @@ div.v-layout.v-horizontal.v-widget {
 	border-color: #197de1;
 }
 
+.mytheme .v-datefield-popup .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-outside-range, .mytheme .v-datefield-popup .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-outside-range:hover {
+	color: #a0a0a0;
+	cursor: not-allowed;
+}
+
 .mytheme .v-datefield-popup .v-datefield-calendarpanel-weekdays {
 	height: 26px;
 	color: rgba(133, 133, 133, 0.85);
@@ -5155,7 +5181,7 @@ div.v-layout.v-horizontal.v-widget {
 	white-space: nowrap;
 }
 
-.mytheme .v-datefield-popup td[class$="year"] button, .mytheme .v-datefield-popup td[class$="month"] button {
+.mytheme .v-datefield-popup td[class*="year"] button, .mytheme .v-datefield-popup td[class*="month"] button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -5175,7 +5201,7 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: middle;
 }
 
-.mytheme .v-datefield-popup td[class$="year"] button:before, .mytheme .v-datefield-popup td[class$="month"] button:before {
+.mytheme .v-datefield-popup td[class*="year"] button:before, .mytheme .v-datefield-popup td[class*="month"] button:before {
 	color: #a0a0a0;
 	font-size: 21px;
 	line-height: 24px;
@@ -5184,13 +5210,18 @@ div.v-layout.v-horizontal.v-widget {
 	transition: color 200ms;
 }
 
-.mytheme .v-datefield-popup td[class$="year"] button:hover, .mytheme .v-datefield-popup td[class$="month"] button:hover {
-	opacity: 1;
-	filter: none ;
+.mytheme .v-datefield-popup td[class*="year"] button:hover:before, .mytheme .v-datefield-popup td[class*="month"] button:hover:before {
+	color: #197de1;
 }
 
-.mytheme .v-datefield-popup td[class$="year"] button:hover:before, .mytheme .v-datefield-popup td[class$="month"] button:hover:before {
-	color: #197de1;
+.mytheme .v-datefield-popup td[class*="year"] button.outside-range, .mytheme .v-datefield-popup td[class*="month"] button.outside-range {
+	cursor: default;
+	opacity: 0.3;
+	filter: alpha(opacity=30.0) ;
+}
+
+.mytheme .v-datefield-popup td[class*="year"] button.outside-range:hover:before, .mytheme .v-datefield-popup td[class*="month"] button.outside-range:hover:before {
+	color: #a0a0a0;
 }
 
 .mytheme .v-datefield-popup .v-button-prevyear:before {
@@ -5324,6 +5355,11 @@ div.v-layout.v-horizontal.v-widget {
 	border-color: #197de1;
 }
 
+.mytheme .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-outside-range, .mytheme .v-datefield-calendarpanel-day.v-datefield-calendarpanel-day-outside-range:hover {
+	color: #a0a0a0;
+	cursor: not-allowed;
+}
+
 .mytheme .v-datefield-calendarpanel-weekdays {
 	height: 26px;
 	color: rgba(133, 133, 133, 0.85);
@@ -5338,7 +5374,7 @@ div.v-layout.v-horizontal.v-widget {
 	white-space: nowrap;
 }
 
-.mytheme td[class$="year"] button, .mytheme td[class$="month"] button {
+.mytheme td[class*="year"] button, .mytheme td[class*="month"] button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -5358,7 +5394,7 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: middle;
 }
 
-.mytheme td[class$="year"] button:before, .mytheme td[class$="month"] button:before {
+.mytheme td[class*="year"] button:before, .mytheme td[class*="month"] button:before {
 	color: #a0a0a0;
 	font-size: 21px;
 	line-height: 24px;
@@ -5367,13 +5403,18 @@ div.v-layout.v-horizontal.v-widget {
 	transition: color 200ms;
 }
 
-.mytheme td[class$="year"] button:hover, .mytheme td[class$="month"] button:hover {
-	opacity: 1;
-	filter: none ;
+.mytheme td[class*="year"] button:hover:before, .mytheme td[class*="month"] button:hover:before {
+	color: #197de1;
 }
 
-.mytheme td[class$="year"] button:hover:before, .mytheme td[class$="month"] button:hover:before {
-	color: #197de1;
+.mytheme td[class*="year"] button.outside-range, .mytheme td[class*="month"] button.outside-range {
+	cursor: default;
+	opacity: 0.3;
+	filter: alpha(opacity=30.0) ;
+}
+
+.mytheme td[class*="year"] button.outside-range:hover:before, .mytheme td[class*="month"] button.outside-range:hover:before {
+	color: #a0a0a0;
 }
 
 .mytheme .v-button-prevyear:before {
@@ -6025,6 +6066,11 @@ div.v-layout.v-horizontal.v-widget {
 	border-color: #197de1;
 }
 
+.mytheme .v-inline-datefield-calendarpanel-day.v-inline-datefield-calendarpanel-day-outside-range, .mytheme .v-inline-datefield-calendarpanel-day.v-inline-datefield-calendarpanel-day-outside-range:hover {
+	color: #a0a0a0;
+	cursor: not-allowed;
+}
+
 .mytheme .v-inline-datefield-calendarpanel-weekdays {
 	height: 26px;
 	color: rgba(133, 133, 133, 0.85);
@@ -6039,7 +6085,7 @@ div.v-layout.v-horizontal.v-widget {
 	white-space: nowrap;
 }
 
-.mytheme td[class$="year"] button, .mytheme td[class$="month"] button {
+.mytheme td[class*="year"] button, .mytheme td[class*="month"] button {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -6059,7 +6105,7 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: middle;
 }
 
-.mytheme td[class$="year"] button:before, .mytheme td[class$="month"] button:before {
+.mytheme td[class*="year"] button:before, .mytheme td[class*="month"] button:before {
 	color: #a0a0a0;
 	font-size: 21px;
 	line-height: 24px;
@@ -6068,13 +6114,18 @@ div.v-layout.v-horizontal.v-widget {
 	transition: color 200ms;
 }
 
-.mytheme td[class$="year"] button:hover, .mytheme td[class$="month"] button:hover {
-	opacity: 1;
-	filter: none ;
+.mytheme td[class*="year"] button:hover:before, .mytheme td[class*="month"] button:hover:before {
+	color: #197de1;
 }
 
-.mytheme td[class$="year"] button:hover:before, .mytheme td[class$="month"] button:hover:before {
-	color: #197de1;
+.mytheme td[class*="year"] button.outside-range, .mytheme td[class*="month"] button.outside-range {
+	cursor: default;
+	opacity: 0.3;
+	filter: alpha(opacity=30.0) ;
+}
+
+.mytheme td[class*="year"] button.outside-range:hover:before, .mytheme td[class*="month"] button.outside-range:hover:before {
+	color: #a0a0a0;
 }
 
 .mytheme .v-button-prevyear:before {
@@ -7650,8 +7701,16 @@ div.v-layout.v-horizontal.v-widget {
 	padding-left: 12px;
 }
 
+.mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, .mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-left"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
+	left: 12px;
+}
+
 .mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"] {
 	padding-right: 12px;
+}
+
+.mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h2, .mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h3, .mytheme .v-window-contents  > .v-scrollable  > .v-formlayout [class*="margin-right"] > tbody > [class*="row"] > [class*="contentcell"]  > .v-label-h4 {
+	right: 12px;
 }
 
 .mytheme .v-window-contents  > .v-scrollable:focus {
@@ -8016,9 +8075,14 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .v-table-footer-container, .mytheme .v-table-caption-container {
 	overflow: hidden;
 	line-height: 1;
+	min-height: 37px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+.v-ie8 .mytheme .v-table-footer-container, .v-ie8 .mytheme .v-table-caption-container {
+	min-height: 14px;
 }
 
 .mytheme .v-table-footer-container {
@@ -8157,12 +8221,12 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-table-header-cell-asc .v-table-sort-indicator:before {
-	content: "\f0dd";
+	content: "\f0de";
 	font-family: FontAwesome;
 }
 
 .mytheme .v-table-header-cell-desc .v-table-sort-indicator:before {
-	content: "\f0de";
+	content: "\f0dd";
 	font-family: FontAwesome;
 }
 
@@ -8533,6 +8597,10 @@ div.v-layout.v-horizontal.v-widget {
 	box-sizing: content-box;
 	padding-left: 0;
 	padding-right: 0;
+}
+
+.mytheme .v-treetable [class*="caption-container"], .mytheme .v-treetable [class*="footer-container"] {
+	min-height: 14px;
 }
 
 .mytheme .v-treetable [class*="cell-wrapper"] {
@@ -9205,6 +9273,7 @@ div.v-layout.v-horizontal.v-widget {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	border-bottom: 2px solid transparent;
+	position: relative;
 	-webkit-transition: border-bottom 200ms, color 200ms;
 	-moz-transition: border-bottom 200ms, color 200ms;
 	transition: border-bottom 200ms, color 200ms;
@@ -9227,7 +9296,6 @@ div.v-layout.v-horizontal.v-widget {
 	filter: alpha(opacity=50) ;
 	cursor: default;
 	color: inherit !important;
-	border-bottom: none;
 }
 
 .mytheme .v-tabsheet-tabitemcell:first-child .v-caption, .mytheme .v-tabsheet-tabitemcell[aria-hidden="true"] + td .v-caption {
@@ -9247,14 +9315,23 @@ div.v-layout.v-horizontal.v-widget {
 	color: #197de1;
 }
 
+.mytheme .v-tabsheet-tabitemcell .v-caption-closable {
+	padding-right: 22px;
+}
+
+.mytheme .v-tabsheet-tabitemcell.icons-on-top .v-caption-closable {
+	padding-right: 4px;
+}
+
 .mytheme .v-tabsheet-tabitemcell .v-tabsheet-caption-close {
-	display: inline-block;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin: -8px 0 0;
 	font-size: 18px;
 	line-height: 18px;
 	width: 18px;
-	vertical-align: middle;
 	text-align: center;
-	margin: 0 -4px 0 8px;
 	border-radius: 2px;
 	color: #969696;
 }
@@ -9428,9 +9505,9 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption {
-	position: relative;
 	margin-left: 4px;
 	padding: 0 12px;
+	background-color: #fafafa;
 	border: 1px solid transparent;
 	line-height: 36px;
 	border-radius: 4px 4px 0 0;
@@ -9443,6 +9520,20 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption:hover {
 	background-color: #f2f2f2;
 	border-bottom-color: #dfdfdf;
+}
+
+.mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption.v-disabled:hover {
+	background-color: #fafafa;
+}
+
+.mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption-closable {
+	padding-right: 30px;
+}
+
+.mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-tabsheet-caption-close {
+	top: 4px;
+	right: 4px;
+	margin-top: 0;
 }
 
 .mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer td:first-child .v-caption, .mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer [aria-hidden="true"] + td .v-caption {
@@ -9458,17 +9549,6 @@ div.v-layout.v-horizontal.v-widget {
 	border-color: #dfdfdf;
 	border-bottom: none;
 	padding-bottom: 1px;
-}
-
-.mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-caption-closable {
-	padding-right: 30px;
-}
-
-.mytheme .v-tabsheet-framed  > .v-tabsheet-tabcontainer .v-tabsheet-caption-close {
-	position: absolute;
-	top: 4px;
-	right: 4px;
-	margin: 0;
 }
 
 .mytheme .v-tabsheet-framed  > .v-tabsheet-content {
@@ -9487,8 +9567,8 @@ div.v-layout.v-horizontal.v-widget {
 	padding-top: 6px;
 }
 
-.mytheme .v-tabsheet-framed.icons-on-top .v-caption-closable {
-	padding-right: 12px;
+.mytheme .v-tabsheet-framed.icons-on-top  > .v-tabsheet-tabcontainer .v-tabsheet-tabitem-selected .v-caption {
+	padding-bottom: 7px;
 }
 
 .mytheme .v-tabsheet-centered-tabs  > .v-tabsheet-tabcontainer {
@@ -9503,22 +9583,27 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0 9px;
 }
 
-.mytheme .v-tabsheet-icons-on-top  > div > .v-tabsheet-tabs .v-caption {
+.mytheme .v-tabsheet-icons-on-top  > .v-tabsheet-tabcontainer .v-caption {
 	padding-top: 6px;
 	padding-bottom: 6px;
 	line-height: 1.2;
 }
 
-.mytheme .v-tabsheet-icons-on-top  > div > .v-tabsheet-tabs .v-tabsheet-tabitem-selected .v-caption {
-	padding-bottom: 7px;
-}
-
-.mytheme .v-tabsheet-icons-on-top  > div > .v-tabsheet-tabs .v-icon {
+.mytheme .v-tabsheet-icons-on-top  > .v-tabsheet-tabcontainer .v-icon {
 	display: block;
 }
 
-.mytheme .v-tabsheet-icons-on-top  > div > .v-tabsheet-tabs .v-icon  + .v-captiontext.v-captiontext {
+.mytheme .v-tabsheet-icons-on-top  > .v-tabsheet-tabcontainer .v-icon  + .v-captiontext.v-captiontext {
 	margin-left: 0;
+}
+
+.mytheme .v-tabsheet-icons-on-top  > .v-tabsheet-tabcontainer .v-caption-closable {
+	padding-right: 12px;
+}
+
+.mytheme .v-tabsheet-icons-on-top  > .v-tabsheet-tabcontainer .v-tabsheet-caption-close {
+	top: 4px;
+	margin-top: 0;
 }
 
 .mytheme .v-tabsheet-compact-tabbar  > .v-tabsheet-tabcontainer-compact-tabbar .v-caption {
@@ -11024,6 +11109,10 @@ div.v-layout.v-horizontal.v-widget {
 	white-space: normal;
 }
 
+.mytheme .v-upload-immediate .v-button {
+	width: 100%;
+}
+
 .mytheme .v-upload-immediate input[type="file"] {
 	opacity: 0;
 	filter: alpha(opacity=0) ;
@@ -11611,6 +11700,7 @@ div.v-layout.v-horizontal.v-widget {
 	padding: 0 37px 0 19px;
 	cursor: pointer;
 	position: relative;
+	overflow: hidden;
 	text-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
 	-webkit-transition: background-color 300ms, color 60ms;
 	-moz-transition: background-color 300ms, color 60ms;
@@ -11922,6 +12012,7 @@ div.v-layout.v-horizontal.v-widget {
 	height: 37px !important;
 	padding-top: 0;
 	padding-bottom: 0;
+	-webkit-backface-visibility: hidden;
 }
 
 .mytheme .v-ui[width-range~="0-800px"] .valo-menu .v-menubar-user-menu {
@@ -11934,6 +12025,7 @@ div.v-layout.v-horizontal.v-widget {
 	height: 37px;
 	color: #97bee5;
 	max-width: 30%;
+	-webkit-backface-visibility: hidden;
 }
 
 .mytheme .v-ui[width-range~="0-800px"] .valo-menu .v-menubar-user-menu .v-menubar-menuitem {
