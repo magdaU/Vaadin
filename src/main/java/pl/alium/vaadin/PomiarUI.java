@@ -50,7 +50,7 @@ public class PomiarUI extends UI {
 
 	private PomiarManager pomiarManager = new PomiarManager();
 	private Pomiar pomiar1 = new Pomiar(90, 120, 100, "2014-10-24", "inne",
-			false, "pokarm", false, "leki");
+			false, false, false, "leki");
 
 	// stworzenie liste obiektow pommiar
 	private List<Pomiar> pm;
@@ -153,7 +153,7 @@ public class PomiarUI extends UI {
 					pomiar1.setStres(false);
 					pomiar1.setCwiczenia(false);
 					pomiar1.setLeki("");
-					pomiar1.setPokarm("");
+					pomiar1.setPokarm(false);
 					pomiar1.setInne("");
 				} else {
 					pomiar1.setId(selectedPomiar.getId());

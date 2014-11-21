@@ -6,7 +6,7 @@ public class PomiarCukru {
 		private UUID id;
 		private int poziomCukru;
 		private String czasPomiaruCukru;
-		private String pokarm;
+		private boolean pokarm;
 		private boolean cwiczenia;
 		private boolean stres;
 		private String leki;
@@ -20,11 +20,11 @@ public class PomiarCukru {
 			this.leki = leki;
 		}
 
-		public String getPokarm() {
+		public boolean getPokarm() {
 			return pokarm;
 		}
 
-		public void setPokarm(String pokarm) {
+		public void setPokarm(boolean pokarm) {
 			this.pokarm = pokarm;
 		}
 
@@ -45,7 +45,7 @@ public class PomiarCukru {
 		}
 
 		public PomiarCukru (int poziomCukru, String czasPomiaruCukru,
-				String pokarm, boolean cwiczenia, boolean stres, String leki,
+				boolean pokarm, boolean cwiczenia, boolean stres, String leki,
 				String inne){
 			this.poziomCukru=poziomCukru;
 			this.czasPomiaruCukru=czasPomiaruCukru;

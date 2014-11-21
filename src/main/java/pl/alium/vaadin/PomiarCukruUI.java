@@ -48,7 +48,7 @@ public class PomiarCukruUI extends UI {
 	}
 
 	private PomiarCukruManager pomcukierManager = new PomiarCukruManager();
-	private PomiarCukru pomiarC1 = new PomiarCukru(70, "2014-11-06", "obiad",
+	private PomiarCukru pomiarC1 = new PomiarCukru(70, "2014-11-06",false,
 			false, false, "Medocalm", "wysiłek fizyczny-biegi");
 	private BeanItem<PomiarCukru> pomiarItem = new BeanItem<PomiarCukru>(
 			pomiarC1);
@@ -118,6 +118,7 @@ public class PomiarCukruUI extends UI {
 		link1.setTargetBorder(Link.TARGET_BORDER_NONE);
 		link1.setTargetHeight(600);
 		link1.setTargetWidth(700);
+		
 
 		HorizontalLayout hlC = new HorizontalLayout();
 		hlC.setSpacing(true);
@@ -146,18 +147,15 @@ public class PomiarCukruUI extends UI {
 
 		tableC.addValueChangeListener(new Property.ValueChangeListener() {
 			@Override
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				// TODO Auto-generated method stub
-				PomiarCukru selectedPomiarCukru = (PomiarCukru) tableC
-						.getValue();
+			public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+				PomiarCukru selectedPomiarCukru = (PomiarCukru) tableC.getValue();
 				if (selectedPomiarCukru == null) {
 					pomiarC1.setCwiczenia(false);
 					pomiarC1.setCzasPomiaruCukru("");
 					pomiarC1.setId(null);
 					pomiarC1.setInne("");
 					pomiarC1.setLeki("");
-					pomiarC1.setPokarm("");
+					pomiarC1.setPokarm(false);
 					pomiarC1.setStres(false);
 				} else {
 					pomiarC1.setCwiczenia(selectedPomiarCukru.getCwiczenia());

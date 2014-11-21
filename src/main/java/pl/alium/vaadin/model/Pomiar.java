@@ -9,14 +9,14 @@ public class Pomiar {
 	private int skurcz;
 	private int rozkurcz;
 	private String czasPomiaru;
-	private String pokarm;
+	private boolean pokarm;
 	private boolean cwiczenia;
 	private boolean stres;
 	private String leki;
 	private String inne ="brak snu";
 	
 	public Pomiar (int tetno, int skurcz, int rozkurcz, String czasPomiaru,
-			String inne, boolean cwiczenia, String pokarm,
+			String inne, boolean cwiczenia, boolean pokarm,
 			boolean stres, String leki){
 		this.tetno=tetno;
 		this.skurcz=skurcz;
@@ -29,10 +29,10 @@ public class Pomiar {
 		this.leki=leki;
 		
 	}
-	public String getPokarm() {
+	public boolean getPokarm() {
 		return pokarm;
 	}
-	public void setPokarm(String pokarm) {
+	public void setPokarm(boolean pokarm) {
 		this.pokarm = pokarm;
 	}
 	public boolean getCwiczenia() {
